@@ -1,5 +1,5 @@
-const OLLAMA_URL = "http://127.0.0.1:11434/api/chat";
-const MODEL = "qwen2.5:3b";
+const OLLAMA_URL = process.env.OLLAMA_URL || "http://127.0.0.1:11434/api/chat";
+const MODEL = process.env.OLLAMA_MODEL || "qwen2.5:3b";
 
 // Tool definitions that Qwen can select.
 const tools = [
@@ -63,6 +63,30 @@ const tools = [
           }
         },
         required: ["tokenId"]
+      }
+    }
+  },
+  {
+    type: "function",
+    function: {
+      name: "get_department_queue",
+      description: "Get aggregate queue counts for a department without revealing student information.",
+      parameters: {
+        type: "object",
+        properties: {
+          department: {
+            type: "string",
+            enum: [
+              "Student Services",
+              "Accounts",
+              "Examination Cell",
+              "Library",
+              "Administration",
+              "IT Support"
+            ]
+          }
+        },
+        required: ["department"]
       }
     }
   },
@@ -215,6 +239,37 @@ async function executeTool(name, args, context) {
       };
     }
 
+    case "get_department_queue": {
+      const department = args.department;
+
+      if (!allowedServices.includes(department)) {
+        return { error: "Please select a valid QueueLess department." };
+      }
+
+      const [rows] = await pool.execute(
+        `SELECT
+           COUNT(*) AS totalTokens,
+           SUM(status = 'Waiting') AS waiting,
+           SUM(status = 'Serving') AS serving,
+           SUM(status = 'Completed') AS completed,
+           SUM(status = 'Cancelled') AS cancelled
+         FROM queue_tokens
+         WHERE service_type = ?`,
+        [department]
+      );
+
+      const row = rows[0];
+
+      return {
+        department,
+        totalTokens: Number(row.totalTokens || 0),
+        waiting: Number(row.waiting || 0),
+        serving: Number(row.serving || 0),
+        completed: Number(row.completed || 0),
+        cancelled: Number(row.cancelled || 0)
+      };
+    }
+
     case "get_departments":
       return { departments: allowedServices };
 
@@ -264,6 +319,46 @@ async function runAgent({ pool, userId, message, allowedServices }) {
           `   Status: ${token.status}`
         ].join("\n");
       })
+    ].join("\n");
+  }
+
+  // Handle department-level queue questions separately.
+  const requestedDepartment = allowedServices.find(department =>
+    message.toLowerCase().includes(department.toLowerCase())
+  );
+
+  const asksOwnQueue =
+    /\b(my|mine|my token|my tokens)\b/i.test(message);
+
+  const asksDepartmentQueue =
+    !asksOwnQueue && (
+      /\b(overall|department|all students|entire|current queue|queue status in|queue status for)\b/i.test(message) ||
+      (requestedDepartment &&
+       /\b(queue|waiting|serving|status|tokens)\b/i.test(message))
+    );
+
+  if (asksDepartmentQueue) {
+    if (!requestedDepartment) {
+      return "Please specify which department you want to check.";
+    }
+
+    const result = await executeTool(
+      "get_department_queue",
+      { department: requestedDepartment },
+      context
+    );
+
+    if (result.error) return result.error;
+
+    return [
+      "Current queue summary:",
+      "",
+      "Department: " + result.department,
+      "Total tokens: " + result.totalTokens,
+      "Waiting: " + result.waiting,
+      "Currently serving: " + result.serving,
+      "Completed: " + result.completed,
+      "Cancelled: " + result.cancelled
     ].join("\n");
   }
 
