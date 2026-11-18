@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Dashboard - QueueLess</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+
+    <header>
+
+        <nav class="navbar">
+
+            <div class="logo">
+                QueueLess
+            </div>
+
+            <ul class="nav-links">
+
+                <li>
+                    <a href="admin.html">
+                        Dashboard
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#departments">
+                        Departments
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#staff">
+                        Staff
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#users">
+                        Users
+                    </a>
+                </li>
+
+            </ul>
+
+            <div class="nav-buttons">
+
+                <button
+                    class="logout-btn"
+                    onclick="adminLogout()"
+                >
+                    Logout
+                </button>
+
+            </div>
+
+        </nav>
+
+    </header>
+
+
+
+    <!-- Admin Dashboard -->
+
+    <main class="admin-dashboard">
+
+
+        <!-- Welcome -->
+
+        <section class="admin-welcome">
+
+            <p class="welcome-small">
+                Admin Dashboard
+            </p>
+
+            <h1>
+                Welcome, Admin 👋
+            </h1>
+
+            <p>
+                Manage QueueLess and monitor the queue system.
+            </p>
+
+        </section>
+
+
+
+        <!-- Statistics -->
+
+        <section class="admin-stats">
+
+            <div class="admin-stat-card">
+
+                <div class="admin-stat-icon">
+                    👨‍🎓
+                </div>
+
+                <div>
+
+                    <p>
+                        Total Students
+                    </p>
+
+                    <h2 id="totalStudents">
+                        150
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="admin-stat-card">
+
+                <div class="admin-stat-icon">
+                    👨‍💼
+                </div>
+
+                <div>
+
+                    <p>
+                        Total Staff
+                    </p>
+
+                    <h2 id="totalStaff">
+                        12
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="admin-stat-card">
+
+                <div class="admin-stat-icon">
+                    🏢
+                </div>
+
+                <div>
+
+                    <p>
+                        Departments
+                    </p>
+
+                    <h2 id="totalDepartments">
+                        6
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="admin-stat-card">
+
+                <div class="admin-stat-icon">
+                    🎫
+                </div>
+
+                <div>
+
+                    <p>
+                        Today's Tokens
+                    </p>
+
+                    <h2 id="todayTokens">
+                        84
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- Queue Overview -->
+
+        <section class="admin-overview">
+
+            <div class="admin-overview-card">
+
+                <h2>
+                    Queue Overview
+                </h2>
+
+                <p>
+                    Current status of today's queues.
+                </p>
+
+
+                <div class="overview-item">
+
+                    <span>
+                        Student Services
+                    </span>
+
+                    <strong>
+                        8 waiting
+                    </strong>
+
+                </div>
+
+
+                <div class="overview-item">
+
+                    <span>
+                        Accounts
+                    </span>
+
+                    <strong>
+                        5 waiting
+                    </strong>
+
+                </div>
+
+
+                <div class="overview-item">
+
+                    <span>
+                        Examination Cell
+                    </span>
+
+                    <strong>
+                        7 waiting
+                    </strong>
+
+                </div>
+
+
+                <div class="overview-item">
+
+                    <span>
+                        Library
+                    </span>
+
+                    <strong>
+                        3 waiting
+                    </strong>
+
+                </div>
+
+
+                <div class="overview-item">
+
+                    <span>
+                        Administration
+                    </span>
+
+                    <strong>
+                        4 waiting
+                    </strong>
+
+                </div>
+
+
+                <div class="overview-item">
+
+                    <span>
+                        IT Support
+                    </span>
+
+                    <strong>
+                        2 waiting
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Quick Actions -->
+
+            <div class="admin-overview-card">
+
+                <h2>
+                    Quick Actions
+                </h2>
+
+                <p>
+                    Manage the QueueLess system.
+                </p>
+
+
+                <button
+                    class="admin-action-btn"
+                    onclick="addDepartment()"
+                >
+                    + Add Department
+                </button>
+
+
+                <button
+                    class="admin-action-btn"
+                    onclick="addStaff()"
+                >
+                    + Add Staff
+                </button>
+
+
+                <button
+                    class="admin-action-btn"
+                    onclick="viewUsers()"
+                >
+                    👥 View Users
+                </button>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- Departments -->
+
+        <section
+            id="departments"
+            class="admin-section"
+        >
+
+            <div class="admin-section-title">
+
+                <h2>
+                    Manage Departments
+                </h2>
+
+                <p>
+                    Add, edit or remove departments.
+                </p>
+
+            </div>
+
+
+            <div class="admin-table-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Department
+                            </th>
+
+                            <th>
+                                Staff
+                            </th>
+
+                            <th>
+                                Waiting
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                            <th>
+                                Action
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="departmentTable">
+
+                        <tr>
+
+                            <td>
+                                Student Services
+                            </td>
+
+                            <td>
+                                3
+                            </td>
+
+                            <td>
+                                8
+                            </td>
+
+                            <td>
+                                <span class="active-status">
+                                    Active
+                                </span>
+                            </td>
+
+                            <td>
+
+                                <button
+                                    class="small-edit-btn"
+                                    onclick="editDepartment('Student Services')"
+                                >
+                                    Edit
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                Accounts
+                            </td>
+
+                            <td>
+                                2
+                            </td>
+
+                            <td>
+                                5
+                            </td>
+
+                            <td>
+                                <span class="active-status">
+                                    Active
+                                </span>
+                            </td>
+
+                            <td>
+
+                                <button
+                                    class="small-edit-btn"
+                                    onclick="editDepartment('Accounts')"
+                                >
+                                    Edit
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                Examination Cell
+                            </td>
+
+                            <td>
+                                2
+                            </td>
+
+                            <td>
+                                7
+                            </td>
+
+                            <td>
+                                <span class="active-status">
+                                    Active
+                                </span>
+                            </td>
+
+                            <td>
+
+                                <button
+                                    class="small-edit-btn"
+                                    onclick="editDepartment('Examination Cell')"
+                                >
+                                    Edit
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                Library
+                            </td>
+
+                            <td>
+                                2
+                            </td>
+
+                            <td>
+                                3
+                            </td>
+
+                            <td>
+                                <span class="active-status">
+                                    Active
+                                </span>
+                            </td>
+
+                            <td>
+
+                                <button
+                                    class="small-edit-btn"
+                                    onclick="editDepartment('Library')"
+                                >
+                                    Edit
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- Staff -->
+
+        <section
+            id="staff"
+            class="admin-section"
+        >
+
+            <div class="admin-section-title">
+
+                <h2>
+                    Manage Staff
+                </h2>
+
+                <p>
+                    Staff members currently registered in QueueLess.
+                </p>
+
+            </div>
+
+
+            <div class="admin-table-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Name
+                            </th>
+
+                            <th>
+                                Email
+                            </th>
+
+                            <th>
+                                Department
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        <tr>
+
+                            <td>
+                                Staff Member 1
+                            </td>
+
+                            <td>
+                                staff1@queueless.com
+                            </td>
+
+                            <td>
+                                Student Services
+                            </td>
+
+                            <td>
+                                <span class="active-status">
+                                    Active
+                                </span>
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                Staff Member 2
+                            </td>
+
+                            <td>
+                                staff2@queueless.com
+                            </td>
+
+                            <td>
+                                Accounts
+                            </td>
+
+                            <td>
+                                <span class="active-status">
+                                    Active
+                                </span>
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                Staff Member 3
+                            </td>
+
+                            <td>
+                                staff3@queueless.com
+                            </td>
+
+                            <td>
+                                Examination Cell
+                            </td>
+
+                            <td>
+                                <span class="active-status">
+                                    Active
+                                </span>
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- Users -->
+
+        <section
+            id="users"
+            class="admin-section"
+        >
+
+            <div class="admin-section-title">
+
+                <h2>
+                    Recent Users
+                </h2>
+
+                <p>
+                    Recently registered students.
+                </p>
+
+            </div>
+
+
+            <div class="admin-table-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Name
+                            </th>
+
+                            <th>
+                                Email
+                            </th>
+
+                            <th>
+                                Role
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        <tr>
+
+                            <td>
+                                Aliya
+                            </td>
+
+                            <td>
+                                aliya@example.com
+                            </td>
+
+                            <td>
+                                Student
+                            </td>
+
+                            <td>
+                                <span class="active-status">
+                                    Active
+                                </span>
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                Student 2
+                            </td>
+
+                            <td>
+                                student2@example.com
+                            </td>
+
+                            <td>
+                                Student
+                            </td>
+
+                            <td>
+                                <span class="active-status">
+                                    Active
+                                </span>
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                Student 3
+                            </td>
+
+                            <td>
+                                student3@example.com
+                            </td>
+
+                            <td>
+                                Student
+                            </td>
+
+                            <td>
+                                <span class="active-status">
+                                    Active
+                                </span>
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- Footer -->
+
+    <footer>
+
+        <h2>
+            QueueLess
+        </h2>
+
+        <p>
+            Digital Queue & Token Management System
+        </p>
+
+        <p>
+            © 2026 QueueLess
+        </p>
+
+    </footer>
+
+
+
+    <!-- JavaScript -->
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

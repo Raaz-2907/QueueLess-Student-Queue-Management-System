@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Dashboard - QueueLess</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+    <!-- Navigation Bar -->
+
+    <header>
+
+        <nav class="navbar">
+
+            <div class="logo">
+                QueueLess
+            </div>
+
+
+            <ul class="nav-links">
+
+                <li>
+                    <a href="dashboard.html">
+                        Dashboard
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#departments">
+                        Departments
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#my-token">
+                        My Token
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#history">
+                        History
+                    </a>
+                </li>
+
+            </ul>
+
+
+            <div class="nav-buttons">
+
+                <button class="logout-btn" onclick="logout()">
+                    Logout
+                </button>
+
+            </div>
+
+        </nav>
+
+    </header>
+
+
+
+    <!-- Dashboard -->
+
+    <main class="dashboard">
+
+
+        <!-- Welcome -->
+
+        <section class="dashboard-welcome">
+
+            <div>
+
+                <p class="welcome-small">
+                    Student Dashboard
+                </p>
+
+                <h1>
+                    Welcome to QueueLess 👋
+                </h1>
+
+                <p>
+                    Take a digital token and avoid standing
+                    in long queues.
+                </p>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- Current Token Card -->
+
+        <section class="current-token-section">
+
+            <div class="current-token-card">
+
+                <div>
+
+                    <p class="card-label">
+                        Current Token
+                    </p>
+
+                    <h2 id="currentToken">
+                        A023
+                    </h2>
+
+                </div>
+
+
+                <div>
+
+                    <p class="card-label">
+                        Your Token
+                    </p>
+
+                    <h2 id="myToken">
+                        A027
+                    </h2>
+
+                </div>
+
+
+                <div>
+
+                    <p class="card-label">
+                        People Ahead
+                    </p>
+
+                    <h2 id="peopleAhead">
+                        3
+                    </h2>
+
+                </div>
+
+
+                <div>
+
+                    <p class="card-label">
+                        Estimated Wait
+                    </p>
+
+                    <h2 id="waitTime">
+                        15 min
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- Departments -->
+
+        <section id="departments" class="dashboard-section">
+
+            <div class="dashboard-section-title">
+
+                <h2>
+                    Select a Department
+                </h2>
+
+                <p>
+                    Choose the department you want to visit.
+                </p>
+
+            </div>
+
+
+
+            <div class="department-container">
+
+
+                <!-- Student Services -->
+
+                <div class="department-card">
+
+                    <div class="department-icon">
+                        🎓
+                    </div>
+
+                    <h3>
+                        Student Services
+                    </h3>
+
+                    <p>
+                        Certificates, documents and student enquiries.
+                    </p>
+
+                    <div class="department-status">
+                        Current Token: <strong>A023</strong>
+                    </div>
+
+                    <button onclick="takeToken('Student Services')">
+                        Take Token
+                    </button>
+
+                </div>
+
+
+
+                <!-- Accounts -->
+
+                <div class="department-card">
+
+                    <div class="department-icon">
+                        💰
+                    </div>
+
+                    <h3>
+                        Accounts
+                    </h3>
+
+                    <p>
+                        Fee payment and financial enquiries.
+                    </p>
+
+                    <div class="department-status">
+                        Current Token: <strong>B014</strong>
+                    </div>
+
+                    <button onclick="takeToken('Accounts')">
+                        Take Token
+                    </button>
+
+                </div>
+
+
+
+                <!-- Examination Cell -->
+
+                <div class="department-card">
+
+                    <div class="department-icon">
+                        📝
+                    </div>
+
+                    <h3>
+                        Examination Cell
+                    </h3>
+
+                    <p>
+                        Exam forms, results and examination enquiries.
+                    </p>
+
+                    <div class="department-status">
+                        Current Token: <strong>C009</strong>
+                    </div>
+
+                    <button onclick="takeToken('Examination Cell')">
+                        Take Token
+
+                    </button>
+
+                </div>
+
+
+
+                <!-- Library -->
+
+                <div class="department-card">
+
+                    <div class="department-icon">
+                        📚
+                    </div>
+
+                    <h3>
+                        Library
+                    </h3>
+
+                    <p>
+                        Library services and book-related enquiries.
+                    </p>
+
+                    <div class="department-status">
+                        Current Token: <strong>D006</strong>
+                    </div>
+
+                    <button onclick="takeToken('Library')">
+                        Take Token
+                    </button>
+
+                </div>
+
+
+
+                <!-- Administration -->
+
+                <div class="department-card">
+
+                    <div class="department-icon">
+                        🏢
+                    </div>
+
+                    <h3>
+                        Administration
+                    </h3>
+
+                    <p>
+                        General administration and college enquiries.
+                    </p>
+
+                    <div class="department-status">
+                        Current Token: <strong>E011</strong>
+                    </div>
+
+                    <button onclick="takeToken('Administration')">
+                        Take Token
+                    </button>
+
+                </div>
+
+
+
+                <!-- IT Support -->
+
+                <div class="department-card">
+
+                    <div class="department-icon">
+                        💻
+                    </div>
+
+                    <h3>
+                        IT Support
+                    </h3>
+
+                    <p>
+                        Technical support and computer-related services.
+                    </p>
+
+                    <div class="department-status">
+                        Current Token: <strong>F005</strong>
+                    </div>
+
+                    <button onclick="takeToken('IT Support')">
+                        Take Token
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- My Token -->
+        <section id="my-token" class="dashboard-section">
+
+            <div class="dashboard-section-title">
+
+                <h2>
+                    My Current Token
+                </h2>
+
+            </div>
+
+
+            <div class="my-token-card">
+
+                <div class="big-token">
+                    A027
+                </div>
+
+                <div class="token-details">
+
+                    <p>
+                        <strong>Department:</strong>
+                        Student Services
+                    </p>
+
+                    <p>
+                        <strong>Status:</strong>
+                        <span class="waiting">
+                            Waiting
+                        </span>
+                    </p>
+
+                    <p>
+                        <strong>Current Token:</strong>
+                        A023
+                    </p>
+
+                    <p>
+                        <strong>People Ahead:</strong>
+                        3
+                    </p>
+
+                </div>
+
+
+                <button class="cancel-button" onclick="cancelToken()">
+                    Cancel Token
+                </button>
+
+            </div>
+
+        </section>
+
+
+
+
+        <!-- Token History -->
+
+        <section id="history" class="dashboard-section">
+
+            <div class="dashboard-section-title">
+
+                <h2>
+                    Token History
+                </h2>
+
+                <p>
+                    Your previous queue visits.
+                </p>
+
+            </div>
+
+
+            <div class="history-table-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Token
+                            </th>
+
+                            <th>
+                                Department
+                            </th>
+
+                            <th>
+                                Date
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        <tr>
+
+                            <td>
+                                A019
+                            </td>
+
+                            <td>
+                                Student Services
+                            </td>
+
+                            <td>
+                                02 Oct 2026
+                            </td>
+
+                            <td>
+                                <span class="completed">
+                                    Completed
+                                </span>
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                B011
+                            </td>
+
+                            <td>
+                                Accounts
+                            </td>
+
+                            <td>
+                                28 Sep 2026
+                            </td>
+
+                            <td>
+                                <span class="completed">
+                                    Completed
+                                </span>
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                C006
+                            </td>
+
+                            <td>
+                                Examination Cell
+                            </td>
+
+                            <td>
+                                20 Sep 2026
+                            </td>
+
+                            <td>
+                                <span class="completed">
+                                    Completed
+                                </span>
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- QueueLess AI Assistant -->
+        <section class="ai-assistant" id="aiAssistant">
+            <div class="ai-header">
+                <div>
+                    <h2>QueueLess AI Assistant</h2>
+                    <p>Ask questions about your tokens, queue status and departments.</p>
+                </div>
+                <span class="ai-status">AI Assistant</span>
+            </div>
+
+            <div class="ai-messages" id="aiMessages" aria-live="polite">
+                <div class="ai-message ai-bot">
+                    Hello! I can help you check your queue status, tokens and estimated waiting time.
+                </div>
+            </div>
+
+            <form class="ai-form" id="aiForm">
+                <textarea
+                    id="aiInput"
+                    maxlength="1000"
+                    rows="2"
+                    placeholder="Ask QueueLess AI something..."
+                    required
+                ></textarea>
+                <button type="submit" id="aiSendButton">Send</button>
+            </form>
+
+            <p class="ai-note">QueueLess AI provides read-only assistance. Your existing token controls remain unchanged.</p>
+        </section>
+
+    </main>
+
+
+
+    <!-- Footer -->
+
+    <footer>
+
+        <h2>
+            QueueLess
+        </h2>
+
+        <p>
+            Digital Queue & Token Management System
+        </p>
+
+        <p>
+            © 2026 QueueLess
+        </p>
+
+    </footer>
+
+
+    <script src="script.js"></script>
+</body>
+
+</html>

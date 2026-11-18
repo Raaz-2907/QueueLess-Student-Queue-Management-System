@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Staff Dashboard - QueueLess</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+    <!-- Navigation Bar -->
+
+    <header>
+
+        <nav class="navbar">
+
+            <div class="logo">
+                QueueLess
+            </div>
+
+
+            <ul class="nav-links">
+
+                <li>
+                    <a href="staff.html">
+                        Dashboard
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#queue">
+                        Queue
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#history">
+                        History
+                    </a>
+                </li>
+
+            </ul>
+
+
+            <div class="nav-buttons">
+
+                <button class="logout-btn" onclick="staffLogout()">
+                    Logout
+                </button>
+
+            </div>
+
+        </nav>
+
+    </header>
+
+
+
+    <!-- Staff Dashboard -->
+
+    <main class="staff-dashboard">
+
+
+        <!-- Welcome -->
+
+        <section class="staff-welcome">
+
+            <p class="welcome-small">
+                Staff Dashboard
+            </p>
+
+            <h1>
+                Welcome, Staff 👋
+            </h1>
+
+            <p>
+                Manage today's queue and serve students efficiently.
+            </p>
+
+        </section>
+
+
+
+        <!-- Department Selection -->
+
+        <section class="staff-controls">
+
+            <div class="control-card">
+
+                <label for="department">
+                    Select Department
+                </label>
+
+                <select id="department">
+
+                    <option value="Student Services">
+                        Student Services
+                    </option>
+
+                    <option value="Accounts">
+                        Accounts
+                    </option>
+
+                    <option value="Examination Cell">
+                        Examination Cell
+                    </option>
+
+                    <option value="Library">
+                        Library
+                    </option>
+
+                    <option value="Administration">
+                        Administration
+                    </option>
+
+                    <option value="IT Support">
+                        IT Support
+                    </option>
+
+                </select>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- Queue Summary -->
+
+        <section class="staff-stats">
+
+            <div class="staff-stat-card">
+
+                <span class="staff-stat-icon">
+                    🎫
+                </span>
+
+                <div>
+
+                    <p>
+                        Current Token
+                    </p>
+
+                    <h2 id="staffCurrentToken">
+                        A023
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="staff-stat-card">
+
+                <span class="staff-stat-icon">
+                    ⏳
+                </span>
+
+                <div>
+
+                    <p>
+                        Waiting
+                    </p>
+
+                    <h2 id="waitingCount">
+                        4
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="staff-stat-card">
+
+                <span class="staff-stat-icon">
+                    ✅
+                </span>
+
+                <div>
+
+                    <p>
+                        Completed
+                    </p>
+
+                    <h2 id="completedCount">
+                        22
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="staff-stat-card">
+
+                <span class="staff-stat-icon">
+                    📅
+                </span>
+
+                <div>
+
+                    <p>
+                        Today's Tokens
+                    </p>
+
+                    <h2 id="totalTokens">
+                        26
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- Current Token -->
+
+        <section class="now-serving">
+            <div class="now-serving-card">
+
+                <p>NOW SERVING</p>
+
+                <h1 id="nowServing">—</h1>
+
+                <span id="nowServingDepartment">Select a department</span>
+
+            </div>
+
+
+
+            <div class="staff-actions">
+
+                <button class="call-next-btn" onclick="callNextToken()">
+                    ▶ Call Next
+                </button>
+
+                <button class="complete-btn" onclick="completeToken()">
+                    ✓ Complete
+                </button>
+
+                <button class="skip-btn" onclick="skipToken()">
+                    Skip
+                </button>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- Queue -->
+
+        <section id="queue" class="staff-section">
+
+            <div class="staff-section-title">
+
+                <h2>
+                    Today's Queue
+                </h2>
+
+                <p>
+                    Students currently waiting for service.
+                </p>
+
+            </div>
+
+
+            <div class="queue-table-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Token
+                            </th>
+
+                            <th>
+                                Student
+                            </th>
+
+                            <th>
+                                Department
+                            </th>
+
+                            <th>
+                                Time
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="queueTable">
+
+                        <tr>
+
+                            <td>
+                                A024
+                            </td>
+
+                            <td>
+                                Student 1
+                            </td>
+
+                            <td>
+                                Student Services
+                            </td>
+
+                            <td>
+                                10:05 AM
+                            </td>
+
+                            <td>
+                                <span class="queue-waiting">
+                                    Waiting
+                                </span>
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                A025
+                            </td>
+
+                            <td>
+                                Student 2
+                            </td>
+
+                            <td>
+                                Student Services
+                            </td>
+
+                            <td>
+                                10:08 AM
+                            </td>
+
+                            <td>
+                                <span class="queue-waiting">
+                                    Waiting
+                                </span>
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                A026
+                            </td>
+
+                            <td>
+                                Student 3
+                            </td>
+
+                            <td>
+                                Student Services
+                            </td>
+
+                            <td>
+                                10:10 AM
+                            </td>
+
+                            <td>
+                                <span class="queue-waiting">
+                                    Waiting
+                                </span>
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                A027
+                            </td>
+
+                            <td>
+                                Aliya
+                            </td>
+
+                            <td>
+                                Student Services
+                            </td>
+
+                            <td>
+                                10:12 AM
+                            </td>
+
+                            <td>
+                                <span class="queue-waiting">
+                                    Waiting
+                                </span>
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- History -->
+
+        <section id="history" class="staff-section">
+
+            <div class="staff-section-title">
+
+                <h2>
+                    Today's Completed Tokens
+                </h2>
+
+            </div>
+
+
+            <div class="queue-table-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Token
+                            </th>
+
+                            <th>
+                                Student
+                            </th>
+
+                            <th>
+                                Department
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="completedTable">
+
+                        <tr>
+
+                            <td>
+                                A021
+                            </td>
+
+                            <td>
+                                Student 4
+                            </td>
+
+                            <td>
+                                Student Services
+                            </td>
+
+                            <td>
+                                <span class="queue-completed">
+                                    Completed
+                                </span>
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                A022
+                            </td>
+
+                            <td>
+                                Student 5
+                            </td>
+
+                            <td>
+                                Student Services
+                            </td>
+
+                            <td>
+                                <span class="queue-completed">
+                                    Completed
+                                </span>
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- Footer -->
+
+    <footer>
+
+        <h2>
+            QueueLess
+        </h2>
+
+        <p>
+            Digital Queue & Token Management System
+        </p>
+
+        <p>
+            © 2026 QueueLess
+        </p>
+
+    </footer>
+
+
+
+    <!-- JavaScript -->
+
+    <script src="script.js"></script>
+
+
+</body>
+
+</html>

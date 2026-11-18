@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login - QueueLess</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Navigation Bar -->
+    <header>
+        <nav class="navbar">
+
+            <div class="logo">
+                QueueLess
+            </div>
+
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#services">Services</a></li>
+                <li><a href="index.html#how-it-works">How It Works</a></li>
+                <li><a href="index.html#about">About</a></li>
+            </ul>
+
+        </nav>
+    </header>
+
+
+    <!-- Login Section -->
+    <section class="auth-section">
+
+        <div class="auth-container">
+
+            <h1>Welcome Back</h1>
+
+            <p class="auth-subtitle">
+                Login to your QueueLess account
+            </p>
+
+
+            <form id="loginForm">
+
+                <!-- Email -->
+                <div class="form-group">
+
+                    <label for="email">
+                        Email Address
+                    </label>
+
+                    <input type="email" id="email" placeholder="Enter your email" required>
+
+                </div>
+
+
+                <!-- Password -->
+                <div class="form-group">
+
+                    <label for="password">
+                        Password
+                    </label>
+
+                    <input type="password" id="password" placeholder="Enter your password" required>
+
+                </div>
+
+
+                <!-- Remember Me -->
+                <div class="remember">
+
+                    <label>
+                        <input type="checkbox">
+                        Remember me
+                    </label>
+
+                    <a href="#">
+                        Forgot Password?
+                    </a>
+
+                </div>
+
+
+                <!-- Login Button -->
+                <button type="submit" class="auth-button">
+                    Login
+                </button>
+
+            </form>
+
+
+            <!-- Register Link -->
+            <p class="auth-footer">
+
+                Don't have an account?
+
+                <a href="register.html">
+                    Register here
+                </a>
+
+            </p>
+
+
+            <!-- Back Home -->
+            <a href="index.html" class="back-home">
+                ← Back to Home
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <script>
+        document.getElementById("loginForm").addEventListener("submit", async (event) => {
+            event.preventDefault();
+
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value;
+
+            try {
+                const response = await fetch("/api/login", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    alert(data.error || "Login failed.");
+                    return;
+                }
+
+                alert("Login successful!");
+                window.location.href = data.redirect;
+
+            } catch (error) {
+                console.error(error);
+                alert("Cannot connect to the backend. Check that the server is running.");
+            }
+        });
+
+
+    </script>
+
+</body>
+
+</html>
