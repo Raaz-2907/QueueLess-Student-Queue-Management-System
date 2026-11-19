@@ -1,5 +1,6 @@
-const OLLAMA_URL = process.env.OLLAMA_URL || "http://127.0.0.1:11434/api/chat";
+const OLLAMA_URL = process.env.OLLAMA_URL || "https://ollama.com/api/chat";
 const MODEL = process.env.OLLAMA_MODEL || "qwen2.5:3b";
+const OLLAMA_API_KEY = process.env.OLLAMA_API_KEY;
 
 // Tool definitions that Qwen can select.
 const tools = [
@@ -334,7 +335,7 @@ async function runAgent({ pool, userId, message, allowedServices }) {
     !asksOwnQueue && (
       /\b(overall|department|all students|entire|current queue|queue status in|queue status for)\b/i.test(message) ||
       (requestedDepartment &&
-       /\b(queue|waiting|serving|status|tokens)\b/i.test(message))
+        /\b(queue|waiting|serving|status|tokens)\b/i.test(message))
     );
 
   if (asksDepartmentQueue) {
@@ -423,7 +424,6 @@ async function runAgent({ pool, userId, message, allowedServices }) {
       "Note: Waiting time is an estimate, not a guaranteed service time."
     ].join("\\n");
   }
-
   const messages = [
     {
       role: "system",
@@ -458,8 +458,13 @@ Important rules:
     const response = await fetch(OLLAMA_URL, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        ...(OLLAMA_API_KEY
+          ? { Authorization: `Bearer ${OLLAMA_API_KEY}` }
+          : {})
       },
+
+
       signal: AbortSignal.timeout(120000),
       body: JSON.stringify({
         model: MODEL,
@@ -505,11 +510,12 @@ Important rules:
         console.error("QueueLess tool error:", error.message);
         result = { error: "The requested queue information could not be retrieved." };
       }
-
       messages.push({
         role: "tool",
+        tool_name: name,
         content: JSON.stringify(result)
       });
+
     }
   }
 
